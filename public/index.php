@@ -4,7 +4,7 @@ $page_title = "Home | Bean & Brew";
 include "../includes/header.php";
 ?>
 
-<section class="hero" style="height: 400px; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center;">
+<section class="hero" style="height: 400px; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('assets/images/hero.jpg'); background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center;">
     <h1 style="font-size: 3rem; margin-bottom: 10px;">Wake Up with Perfection</h1>
     <p style="font-size: 1.5rem;">Handcrafted coffee, roasted with love.</p>
 </section>
