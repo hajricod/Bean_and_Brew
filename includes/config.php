@@ -1,6 +1,10 @@
 <?php
 // includes/config.php
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $db_path = __DIR__ . '/database.sqlite';
 
 try {
@@ -12,7 +16,7 @@ try {
 }
 
 function getCoffeeItems($pdo) {
-    $stmt = $pdo->query("SELECT name, description, price, image FROM coffee_items");
+    $stmt = $pdo->query("SELECT id, name, description, price, image FROM coffee_items");
     return $stmt->fetchAll();
 }
 

@@ -15,6 +15,13 @@ include "../includes/header.php";
                     <h3 style="margin: 10px 0; color: #4e342e;"><?php echo htmlspecialchars($item['name']); ?></h3>
                     <p style="font-size: 0.9rem; color: #666;"><?php echo htmlspecialchars($item['description']); ?></p>
                     <span class="price" style="font-weight: bold; font-size: 1.2rem; color: #795548; display: block; margin-top: 15px;">$<?php echo number_format($item['price'], 2); ?></span>
+                    
+                    <form action="cart_handler.php" method="POST" style="margin-top: 15px;">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="item_id" value="<?php echo $item['id']; ?>">
+                        <input type="hidden" name="redirect" value="menu.php">
+                        <button type="submit" style="background-color: #795548; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; width: 100%;">Add to Cart</button>
+                    </form>
                 </div>
             <?php endforeach; ?>
         </div>

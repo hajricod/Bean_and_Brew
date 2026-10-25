@@ -36,6 +36,7 @@
         nav {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 20px;
             margin-top: 10px;
         }
@@ -48,6 +49,19 @@
 
         nav a:hover {
             text-decoration: underline;
+        }
+
+        .cart-link {
+            background-color: var(--secondary-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            transition: background 0.3s;
+        }
+
+        .cart-link:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            text-decoration: none;
         }
 
         .container {
@@ -68,11 +82,14 @@
 <body>
 
 <header>
-    <h1>Bean & Brew</h1>
+    <h1 style="margin: 0;">Bean & Brew</h1>
     <nav>
         <a href="index.php">Home</a>
         <a href="menu.php">Menu</a>
         <a href="about.php">About</a>
         <a href="contact.php">Contact</a>
+        <a href="cart.php" class="cart-link">
+            🛒 Cart (<?php echo isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0; ?>)
+        </a>
     </nav>
 </header>
