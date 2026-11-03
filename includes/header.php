@@ -101,6 +101,9 @@
         <?php if (isset($_SESSION['user_id'])): ?>
             <div class="user-nav">
                 <span style="font-size: 0.9rem; opacity: 0.8;">Hello, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</span>
+                <?php if (($_SESSION['user_role'] ?? 'user') === 'admin'): ?>
+                    <a href="admin_dashboard.php" style="margin-left: 10px; font-size: 0.9rem;">Admin Dashboard</a>
+                <?php endif; ?>
                 <a href="logout.php" style="margin-left: 10px; font-size: 0.9rem;">Logout</a>
             </div>
         <?php else: ?>
