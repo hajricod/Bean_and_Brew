@@ -11,7 +11,8 @@
     <style>
         :root { --coffee-ink: #2b211d; --coffee-brown: #56392d; --coffee-gold: #d9a86c; --coffee-cream: #f7f3ed; }
         body { background: var(--coffee-cream); color: var(--coffee-ink); min-height: 100vh; display: flex; flex-direction: column; }
-        main { flex: 1; }
+        main { flex: 1; padding-top: 1.5rem; }
+        main.home-page { padding-top: 0; }
         .site-nav { background: rgba(43, 33, 29, .97); }
         .site-nav .navbar-brand { color: #fff; font-weight: 750; letter-spacing: -.03em; }
         .site-nav .nav-link { color: rgba(255,255,255,.82); }
@@ -54,4 +55,4 @@
         </div>
     </div>
 </nav>
-<main>
+<main class="<?php echo basename($_SERVER['SCRIPT_NAME'] ?? '') === 'index.php' ? 'home-page' : ''; ?>">

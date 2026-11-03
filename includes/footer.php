@@ -1,6 +1,7 @@
 <?php
 // footer.php
 ?>
+</main>
 <footer class="site-footer py-4 mt-5">
     <div class="container text-center small">
         &copy; <?php echo date("Y"); ?> Bean & Brew Coffee Shop. Crafted for good coffee.
@@ -17,6 +18,5 @@
 </div>
 <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="assets/js/cart.js"></script>
-</main>
 </body>
 </html>
