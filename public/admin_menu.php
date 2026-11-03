@@ -29,6 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $name = trim($_POST['name'] ?? '');
     $description = trim($_POST['description'] ?? '');
     $price = (float)($_POST['price'] ?? 0);
+    $category = trim($_POST['category'] ?? '');
+    $ingredients = trim($_POST['ingredients'] ?? '');
+    $calories = filter_var($_POST['calories'] ?? null, FILTER_VALIDATE_INT);
     
     // Image handling
     $image_name = $_POST['existing_image'] ?? '';
@@ -50,12 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 
     if ($error === "") {
-        if (empty($name) || empty($description) || $price <= 0 || empty($image_name)) {
-            $error = "All fields are required, and the image must be uploaded.";
+        if (empty($name) || empty($description) || empty($category) || $price <= 0 || empty($image_name)) {
+            $error = "Name, description, category, a positive price, and an image are required.";
         } else {
             try {
-                $stmt = $pdo->prepare("INSERT INTO coffee_items (name, description, price, image) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$name, $description, $price, $image_name]);
+                $stmt = $pdo->prepare("INSERT INTO coffee_items (name, description, price, image, category, ingredients, calories) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                $stmt->execute([$name, $description, $price, $image_name, $category, $ingredients, $calories]);
                 $message = "New item added successfully!";
             } catch (PDOException $e) {
                 $error = "Error adding item: " . $e->getMessage();
@@ -99,6 +102,24 @@ include "../includes/header.php";
                 <label style="display: block; font-weight: bold; margin-bottom: 5px;">Description</label>
                 <textarea name="description" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; height: 80px;"></textarea>
             </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Category</label>
+                    <select name="category" required class="form-select">
+                        <option value="Hot Coffee">Hot Coffee</option>
+                        <option value="Iced Drinks">Iced Drinks</option>
+                        <option value="Pastries">Pastries</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Calories (kcal)</label>
+                    <input type="number" min="0" name="calories" class="form-control">
+                </div>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Ingredients</label>
+                <input type="text" name="ingredients" class="form-control" placeholder="Comma-separated ingredients">
+            </div>
             <div style="margin-bottom: 15px;">
                 <label style="display: block; font-weight: bold; margin-bottom: 5px;">Product Image</label>
                 <input type="file" name="image" accept="image/*" required style="width: 100%;">
@@ -115,6 +136,7 @@ include "../includes/header.php";
                 <tr>
                     <th style="padding: 15px; text-align: left;">Image</th>
                     <th style="padding: 15px; text-align: left;">Name</th>
+                    <th style="padding: 15px; text-align: left;">Category</th>
                     <th style="padding: 15px; text-align: left;">Description</th>
                     <th style="padding: 15px; text-align: left;">Price</th>
                     <th style="padding: 15px; text-align: center;">Actions</th>
@@ -124,9 +146,14 @@ include "../includes/header.php";
                 <?php foreach ($items as $item): ?>
                     <tr style="border-bottom: 1px solid #eee;">
                         <td style="padding: 10px;">
-                            <img src="assets/images/<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                            <?php if (hasLocalCatalogImage($item['image'])): ?>
+                                <img src="assets/images/<?php echo rawurlencode($item['image']); ?>" alt="" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                            <?php else: ?>
+                                <span style="font-size: 2rem;"><?php echo htmlspecialchars($item['image']); ?></span>
+                            <?php endif; ?>
                         </td>
                         <td style="padding: 15px; font-weight: bold;"><?php echo htmlspecialchars($item['name']); ?></td>
+                        <td style="padding: 15px;"><?php echo htmlspecialchars($item['category']); ?></td>
                         <td style="padding: 15px; font-size: 0.9rem; color: #666;"><?php echo htmlspecialchars($item['description']); ?></td>
                         <td style="padding: 15px;">$<?php echo number_format($item['price'], 2); ?></td>
                         <td style="padding: 15px; text-align: center;">
@@ -141,7 +168,7 @@ include "../includes/header.php";
                 <?php endforeach; ?>
                 <?php if (empty($items)): ?>
                     <tr>
-                        <td colspan="5" style="padding: 30px; text-align: center; color: #999;">No items found in the menu.</td>
+                        <td colspan="6" style="padding: 30px; text-align: center; color: #999;">No items found in the menu.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>

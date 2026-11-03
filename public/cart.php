@@ -58,6 +58,7 @@ if (!empty($_SESSION['cart'])) {
                                 <form action="cart_handler.php" method="POST" style="display: inline;">
                                     <input type="hidden" name="action" value="remove">
                                     <input type="hidden" name="item_id" value="<?php echo $item['id']; ?>">
+                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
                                     <button type="submit" style="background: none; border: none; color: #e53935; cursor: pointer; font-size: 0.9rem;">Remove</button>
                                 </form>
                             </td>
@@ -72,6 +73,7 @@ if (!empty($_SESSION['cart'])) {
                 <div style="margin-top: 30px; display: flex; justify-content: flex-end; gap: 15px;">
                     <form action="cart_handler.php" method="POST">
                         <input type="hidden" name="action" value="clear">
+                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
                         <button type="submit" style="background: none; border: 1px solid #ccc; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Clear Cart</button>
                     </form>
                     <a href="checkout.php" style="display: inline-block; background-color: #4e342e; color: white; padding: 10px 30px; border-radius: 5px; text-decoration: none; font-weight: bold;">Checkout</a>

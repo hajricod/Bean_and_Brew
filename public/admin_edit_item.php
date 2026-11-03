@@ -27,6 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name'] ?? '');
     $description = trim($_POST['description'] ?? '');
     $price = (float)($_POST['price'] ?? 0);
+    $category = trim($_POST['category'] ?? $item['category']);
+    $ingredients = trim($_POST['ingredients'] ?? '');
+    $calories = filter_var($_POST['calories'] ?? null, FILTER_VALIDATE_INT);
     $image_name = $_POST['existing_image'] ?? $item['image'];
 
     // Handle new image upload if provided
@@ -48,12 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($error === "") {
-        if (empty($name) || empty($description) || $price <= 0 || empty($image_name)) {
-            $error = "All fields are required.";
+        if (empty($name) || empty($description) || empty($category) || $price <= 0 || empty($image_name)) {
+            $error = "Name, description, category, and a positive price are required.";
         } else {
             try {
-                $stmt = $pdo->prepare("UPDATE coffee_items SET name = ?, description = ?, price = ?, image = ? WHERE id = ?");
-                $stmt->execute([$name, $description, $price, $image_name, $item_id]);
+                $stmt = $pdo->prepare("UPDATE coffee_items SET name = ?, description = ?, price = ?, image = ?, category = ?, ingredients = ?, calories = ? WHERE id = ?");
+                $stmt->execute([$name, $description, $price, $image_name, $category, $ingredients, $calories, $item_id]);
                 $message = "Item updated successfully!";
                 
                 // Refresh current item data
@@ -97,12 +100,32 @@ include "../includes/header.php";
                 </div>
                 <div style="margin-bottom: 15px;">
                     <label style="display: block; font-weight: bold; margin-bottom: 5px;">Price ($)</label>
-                    <input type="number" step="0.01" name="price" value="<?php echo $item['price']; ?>" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="number" step="0.01" min="0.01" name="price" value="<?php echo $item['price']; ?>" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Category</label>
+                    <select name="category" class="form-select" required>
+                        <?php foreach (['Hot Coffee', 'Iced Drinks', 'Pastries'] as $category_option): ?>
+                            <option value="<?php echo htmlspecialchars($category_option); ?>" <?php echo $item['category'] === $category_option ? 'selected' : ''; ?>><?php echo htmlspecialchars($category_option); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Ingredients</label>
+                    <input type="text" name="ingredients" value="<?php echo htmlspecialchars($item['ingredients'] ?? ''); ?>" class="form-control">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Calories (kcal)</label>
+                    <input type="number" min="0" name="calories" value="<?php echo htmlspecialchars((string)($item['calories'] ?? '')); ?>" class="form-control">
                 </div>
                 <div style="margin-bottom: 20px;">
                     <label style="display: block; font-weight: bold; margin-bottom: 5px;">Current Image</label>
                     <div style="margin-bottom: 10px;">
-                        <img src="assets/images/<?php echo htmlspecialchars($item['image']); ?>" alt="Current" style="height: 80px; border-radius: 5px; border: 1px solid #ddd;">
+                        <?php if (hasLocalCatalogImage($item['image'])): ?>
+                            <img src="assets/images/<?php echo rawurlencode($item['image']); ?>" alt="Current product image" style="height: 80px; border-radius: 5px; border: 1px solid #ddd;">
+                        <?php else: ?>
+                            <span aria-label="Current product icon" style="font-size: 3rem;"><?php echo htmlspecialchars($item['image']); ?></span>
+                        <?php endif; ?>
                     </div>
                     <input type="hidden" name="existing_image" value="<?php echo htmlspecialchars($item['image']); ?>">
                     <label style="display: block; font-weight: bold; margin-bottom: 5px; color: var(--secondary-color);">Upload New Image (optional)</label>

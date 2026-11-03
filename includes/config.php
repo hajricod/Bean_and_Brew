@@ -30,8 +30,18 @@ if (isset($_SESSION['user_id'])) {
 }
 
 function getCoffeeItems($pdo) {
-    $stmt = $pdo->query("SELECT id, name, description, price, image FROM coffee_items");
+    $stmt = $pdo->query("SELECT id, name, description, price, image, category, ingredients, calories FROM coffee_items ORDER BY category, name");
     return $stmt->fetchAll();
+}
+
+function hasLocalCatalogImage($filename) {
+    return is_string($filename)
+        && preg_match('/\A[a-zA-Z0-9._-]+\.(?:jpe?g|png|webp|gif)\z/i', $filename) === 1
+        && is_file(__DIR__ . '/../public/assets/images/' . $filename);
+}
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 
 function requireAdmin() {
