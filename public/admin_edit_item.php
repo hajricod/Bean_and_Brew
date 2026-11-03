@@ -74,63 +74,67 @@ $page_title = "Edit Item | Admin";
 include "../includes/header.php";
 ?>
 
-<div class="container">
-    <div style="max-width: 600px; margin: 0 auto;">
-        <a href="admin_menu.php" style="display: inline-block; margin-bottom: 20px; color: var(--secondary-color); text-decoration: none; font-weight: bold;">&larr; Back to Menu Manager</a>
+<section class="container py-4 py-lg-5">
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-7 col-xl-6">
+        <a href="admin_menu.php" class="d-inline-block mb-3 text-secondary text-decoration-none fw-semibold">&larr; Back to Menu Manager</a>
         
-        <h2 style="color: var(--primary-color);">Edit Coffee Item</h2>
+        <h1 class="h2 mb-4">Edit Coffee Item</h1>
 
         <?php if ($message): ?>
-            <div style="background: #c8e6c9; color: #2e7d32; padding: 15px; border-radius: 5px; margin-bottom: 20px;"><?php echo htmlspecialchars($message); ?></div>
+            <div class="alert alert-success" role="status"><?php echo htmlspecialchars($message); ?></div>
         <?php endif; ?>
 
         <?php if ($error): ?>
-            <div style="background: #ffcdd2; color: #c62828; padding: 15px; border-radius: 5px; margin-bottom: 20px;"><?php echo htmlspecialchars($error); ?></div>
+            <div class="alert alert-danger" role="alert"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
 
-        <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-            <form action="admin_edit_item.php?id=<?php echo $item_id; ?>" method="POST" enctype="multipart/form-data">
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Name</label>
-                    <input type="text" name="name" value="<?php echo htmlspecialchars($item['name']); ?>" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+            <form action="admin_edit_item.php?id=<?php echo $item_id; ?>" method="POST" enctype="multipart/form-data" class="vstack gap-3">
+                <div>
+                    <label for="item-name" class="form-label fw-semibold">Name</label>
+                    <input type="text" id="item-name" name="name" value="<?php echo htmlspecialchars($item['name']); ?>" class="form-control" required>
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Description</label>
-                    <textarea name="description" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; height: 80px;"><?php echo htmlspecialchars($item['description']); ?></textarea>
+                <div>
+                    <label for="item-description" class="form-label fw-semibold">Description</label>
+                    <textarea id="item-description" name="description" class="form-control" rows="3" required><?php echo htmlspecialchars($item['description']); ?></textarea>
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Price ($)</label>
-                    <input type="number" step="0.01" min="0.01" name="price" value="<?php echo $item['price']; ?>" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <div>
+                    <label for="item-price" class="form-label fw-semibold">Price ($)</label>
+                    <input type="number" id="item-price" step="0.01" min="0.01" name="price" value="<?php echo $item['price']; ?>" class="form-control" required>
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Category</label>
-                    <select name="category" class="form-select" required>
+                <div>
+                    <label for="item-category" class="form-label fw-semibold">Category</label>
+                    <select id="item-category" name="category" class="form-select" required>
                         <?php foreach (['Hot Coffee', 'Iced Drinks', 'Pastries'] as $category_option): ?>
                             <option value="<?php echo htmlspecialchars($category_option); ?>" <?php echo $item['category'] === $category_option ? 'selected' : ''; ?>><?php echo htmlspecialchars($category_option); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Ingredients</label>
-                    <input type="text" name="ingredients" value="<?php echo htmlspecialchars($item['ingredients'] ?? ''); ?>" class="form-control">
+                <div>
+                    <label for="item-ingredients" class="form-label fw-semibold">Ingredients</label>
+                    <input type="text" id="item-ingredients" name="ingredients" value="<?php echo htmlspecialchars($item['ingredients'] ?? ''); ?>" class="form-control">
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Calories (kcal)</label>
-                    <input type="number" min="0" name="calories" value="<?php echo htmlspecialchars((string)($item['calories'] ?? '')); ?>" class="form-control">
+                <div>
+                    <label for="item-calories" class="form-label fw-semibold">Calories (kcal)</label>
+                    <input type="number" min="0" id="item-calories" name="calories" value="<?php echo htmlspecialchars((string)($item['calories'] ?? '')); ?>" class="form-control">
                 </div>
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Current Image</label>
-                    <div style="margin-bottom: 10px;">
-                        <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="Current product image" style="height: 80px; border-radius: 5px; border: 1px solid #ddd;">
+                <div>
+                    <label class="form-label fw-semibold">Current Image</label>
+                    <div class="mb-2">
+                        <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="Current product image" height="80" class="rounded border object-fit-cover">
                     </div>
                     <input type="hidden" name="existing_image" value="<?php echo htmlspecialchars($item['image']); ?>">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px; color: var(--secondary-color);">Upload New Image (optional)</label>
-                    <input type="file" name="image" accept="image/*" style="width: 100%;">
+                    <label for="item-image" class="form-label fw-semibold">Upload New Image (optional)</label>
+                    <input type="file" id="item-image" name="image" accept="image/*" class="form-control">
                 </div>
-                <button type="submit" style="width: 100%; background-color: #4e342e; color: white; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Update Item</button>
+                <button type="submit" class="btn btn-warning rounded-pill fw-semibold w-100">Update Item</button>
             </form>
+            </div>
+        </div>
         </div>
     </div>
-</div>
+</section>
 
 <?php include "../includes/footer.php"; ?>

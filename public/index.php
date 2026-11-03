@@ -27,8 +27,8 @@ include "../includes/header.php";
             <div class="col-md-4">
                 <article class="card product-card h-100 shadow-sm">
                     <a href="product.php?id=<?php echo (int)$item['id']; ?>" class="text-decoration-none">
-                        <div class="product-art" aria-hidden="true">
-                            <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" style="width: 100%; height: 150px; object-fit: cover;">
+                        <div class="product-art ratio ratio-4x3" aria-hidden="true">
+                            <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" class="w-100 h-100 object-fit-cover">
                         </div>
                     </a>
                     <div class="card-body d-flex flex-column flex-grow-1 p-4">

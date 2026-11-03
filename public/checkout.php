@@ -74,44 +74,46 @@ $page_title = "Checkout | Bean & Brew";
 include "../includes/header.php";
 ?>
 
-<div class="container">
-    <div style="max-width: 600px; margin: 0 auto;">
-        <h2 style="text-align: center;">Complete Your Order</h2>
+<section class="container py-4 py-lg-5">
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-7 col-xl-6">
+        <h1 class="h2 text-center mb-4">Complete Your Order</h1>
         
         <?php if (isset($error)): ?>
-            <div style="background: #ffcdd2; color: #c62828; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
-                <?php echo htmlspecialchars($error); ?>
-            </div>
+            <div class="alert alert-danger" role="alert"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
 
-        <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-            <h3 style="margin-top: 0;">Order Summary</h3>
-            <div style="border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px;">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4 p-lg-5">
+            <h2 class="h4 mb-3">Order Summary</h2>
+            <div class="border-bottom pb-3 mb-4">
                 <?php foreach ($cart_items as $item): ?>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                        <span><?php echo htmlspecialchars($item['name']); ?> (x<?php echo $item['quantity']; ?>)</span>
-                        <span>$<?php echo number_format($item['subtotal'], 2); ?></span>
+                    <div class="d-flex justify-content-between gap-3 mb-2">
+                        <span><?php echo htmlspecialchars($item['name']); ?> <span class="text-secondary">(x<?php echo $item['quantity']; ?>)</span></span>
+                        <span class="text-nowrap">$<?php echo number_format($item['subtotal'], 2); ?></span>
                     </div>
                 <?php endforeach; ?>
-                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-top: 10px;">
+                <div class="d-flex justify-content-between fw-bold fs-5 mt-3">
                     <span>Total</span>
                     <span>$<?php echo number_format($total_price, 2); ?></span>
                 </div>
             </div>
 
-            <form action="checkout.php" method="POST">
-                <div style="margin-bottom: 15px;">
-                    <label for="name" style="display: block; font-weight: bold; margin-bottom: 5px;">Full Name</label>
-                    <input type="text" name="name" id="name" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" placeholder="John Doe" value="<?php echo htmlspecialchars($prefill_name); ?>">
+            <form action="checkout.php" method="POST" class="vstack gap-3">
+                <div>
+                    <label for="name" class="form-label fw-semibold">Full Name</label>
+                    <input type="text" name="name" id="name" class="form-control" autocomplete="name" required placeholder="John Doe" value="<?php echo htmlspecialchars($prefill_name); ?>">
                 </div>
-                <div style="margin-bottom: 20px;">
-                    <label for="email" style="display: block; font-weight: bold; margin-bottom: 5px;">Email Address</label>
-                    <input type="email" name="email" id="email" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" placeholder="john@example.com" value="<?php echo htmlspecialchars($prefill_email); ?>">
+                <div>
+                    <label for="email" class="form-label fw-semibold">Email Address</label>
+                    <input type="email" name="email" id="email" class="form-control" autocomplete="email" required placeholder="john@example.com" value="<?php echo htmlspecialchars($prefill_email); ?>">
                 </div>
-                <button type="submit" style="width: 100%; background-color: #4e342e; color: white; padding: 15px; border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">Place Order</button>
+                <button type="submit" class="btn btn-warning btn-lg rounded-pill fw-semibold w-100">Place Order</button>
             </form>
+            </div>
+        </div>
         </div>
     </div>
-</div>
+</section>
 
 <?php include "../includes/footer.php"; ?>

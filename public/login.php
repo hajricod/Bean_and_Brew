@@ -40,30 +40,36 @@ $page_title = "Login | Bean & Brew";
 include "../includes/header.php";
 ?>
 
-<div class="container">
-    <div style="max-width: 400px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-        <h2 style="text-align: center; color: #4e342e;">Login</h2>
+<section class="container py-4 py-lg-5">
+    <div class="row justify-content-center">
+        <div class="col-sm-10 col-md-7 col-lg-5 col-xl-4">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-4 p-lg-5">
+        <h1 class="h2 text-center text-dark mb-4">Login</h1>
         
         <?php if ($error): ?>
-            <div style="background: #ffcdd2; color: #c62828; padding: 10px; border-radius: 5px; margin-bottom: 20px;"><?php echo htmlspecialchars($error); ?></div>
+            <div class="alert alert-danger" role="alert"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
 
-        <form action="login.php" method="POST">
-            <div style="margin-bottom: 15px;">
-                <label for="email" style="display: block; font-weight: bold; margin-bottom: 5px;">Email Address</label>
-                <input type="email" name="email" id="email" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+        <form action="login.php" method="POST" class="vstack gap-3">
+            <div>
+                <label for="email" class="form-label fw-semibold">Email Address</label>
+                <input type="email" name="email" id="email" class="form-control" autocomplete="email" required>
             </div>
-            <div style="margin-bottom: 20px;">
-                <label for="password" style="display: block; font-weight: bold; margin-bottom: 5px;">Password</label>
-                <input type="password" name="password" id="password" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            <div>
+                <label for="password" class="form-label fw-semibold">Password</label>
+                <input type="password" name="password" id="password" class="form-control" autocomplete="current-password" required>
             </div>
-            <button type="submit" style="width: 100%; background-color: #4e342e; color: white; padding: 12px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Login</button>
+            <button type="submit" class="btn btn-warning rounded-pill fw-semibold w-100">Login</button>
         </form>
         
-        <p style="text-align: center; margin-top: 20px;">
-            Don't have an account? <a href="register.php" style="color: #795548;">Register here</a>
+        <p class="text-center text-secondary mt-4 mb-0">
+            Don't have an account? <a href="register.php" class="link-dark fw-semibold">Register here</a>
         </p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>
 
 <?php include "../includes/footer.php"; ?>

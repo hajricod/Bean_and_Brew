@@ -22,65 +22,70 @@ if (!empty($_SESSION['cart'])) {
 }
 ?>
 
-<div class="container">
-    <h2 style="text-align: center; margin-bottom: 30px;">Your Shopping Cart</h2>
+<section class="container py-4 py-lg-5">
+    <h1 class="h2 text-center mb-4">Your Shopping Cart</h1>
 
     <?php if (empty($cart_items)): ?>
-        <div style="text-align: center; padding: 40px; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-            <p style="font-size: 1.2rem; color: #666;">Your cart is currently empty.</p>
-            <a href="menu.php" style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #4e342e; color: white; text-decoration: none; border-radius: 5px;">Browse Menu</a>
+        <div class="card border-0 shadow-sm rounded-4 text-center">
+            <div class="card-body p-4 p-md-5">
+            <p class="lead text-secondary">Your cart is currently empty.</p>
+            <a href="menu.php" class="btn btn-warning rounded-pill px-4 fw-semibold">Browse Menu</a>
+            </div>
         </div>
     <?php else: ?>
-        <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-            <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
-                <thead style="border-bottom: 2px solid #eee;">
-                    <tr style="text-align: left;">
-                        <th style="padding: 15px 0;">Item</th>
-                        <th style="padding: 15px 0;">Price</th>
-                        <th style="padding: 15px 0;">Quantity</th>
-                        <th style="padding: 15px 0;">Subtotal</th>
-                        <th style="padding: 15px 0; text-align: right;">Action</th>
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-3 p-md-4">
+            <div class="table-responsive">
+            <table class="table align-middle mb-4">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Subtotal</th>
+                        <th scope="col" class="text-end">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($cart_items as $item): ?>
-                        <tr style="border-bottom: 1px solid #eee;">
-                            <td style="padding: 15px 0;">
-                                <div style="display: flex; align-items: center; gap: 15px;">
-                                    <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 8px;">
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" width="48" height="48" class="rounded object-fit-cover">
                                     <strong><?php echo htmlspecialchars($item['name']); ?></strong>
                                 </div>
                             </td>
-                            <td style="padding: 15px 0;">$<?php echo number_format($item['price'], 2); ?></td>
-                            <td style="padding: 15px 0;"><?php echo $item['quantity']; ?></td>
-                            <td style="padding: 15px 0;">$<?php echo number_format($item['subtotal'], 2); ?></td>
-                            <td style="padding: 15px 0; text-align: right;">
-                                <form action="cart_handler.php" method="POST" style="display: inline;">
+                            <td class="text-nowrap">$<?php echo number_format($item['price'], 2); ?></td>
+                            <td><?php echo $item['quantity']; ?></td>
+                            <td class="text-nowrap">$<?php echo number_format($item['subtotal'], 2); ?></td>
+                            <td class="text-end">
+                                <form action="cart_handler.php" method="POST" class="d-inline">
                                     <input type="hidden" name="action" value="remove">
                                     <input type="hidden" name="item_id" value="<?php echo $item['id']; ?>">
                                     <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
-                                    <button type="submit" style="background: none; border: none; color: #e53935; cursor: pointer; font-size: 0.9rem;">Remove</button>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Remove</button>
                                 </form>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
-
-            <div style="text-align: right;">
-                <h3 style="font-size: 1.5rem;">Total: <span style="color: #4e342e;">$<?php echo number_format($total_price, 2); ?></span></h3>
+            </div>
+            <div class="text-end">
+                <h2 class="h4">Total: <span class="text-dark">$<?php echo number_format($total_price, 2); ?></span></h2>
                 
-                <div style="margin-top: 30px; display: flex; justify-content: flex-end; gap: 15px;">
+                <div class="d-flex flex-column flex-sm-row justify-content-sm-end gap-2 mt-4">
                     <form action="cart_handler.php" method="POST">
                         <input type="hidden" name="action" value="clear">
                         <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
-                        <button type="submit" style="background: none; border: 1px solid #ccc; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Clear Cart</button>
+                        <button type="submit" class="btn btn-outline-secondary w-100">Clear Cart</button>
                     </form>
-                    <a href="checkout.php" style="display: inline-block; background-color: #4e342e; color: white; padding: 10px 30px; border-radius: 5px; text-decoration: none; font-weight: bold;">Checkout</a>
+                    <a href="checkout.php" class="btn btn-warning rounded-pill px-4 fw-semibold">Checkout</a>
                 </div>
+            </div>
             </div>
         </div>
     <?php endif; ?>
-</div>
+</section>
 
 <?php include "../includes/footer.php"; ?>

@@ -23,8 +23,8 @@ include "../includes/header.php";
     <a class="text-decoration-none text-secondary d-inline-block mb-4" href="menu.php">&larr; Back to menu</a>
     <div class="row g-5 align-items-center">
         <div class="col-lg-6">
-            <div class="product-art rounded-5" style="min-height: 360px;" aria-hidden="true">
-                <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" style="width: 100%; height: 360px; object-fit: cover; border-radius: inherit;">
+            <div class="product-art ratio ratio-4x3 rounded-5" aria-hidden="true">
+                <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" class="w-100 h-100 object-fit-cover rounded-5">
             </div>
         </div>
         <div class="col-lg-6">

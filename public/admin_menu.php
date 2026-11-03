@@ -72,104 +72,110 @@ $page_title = "Admin - Menu Manager | Bean & Brew";
 include "../includes/header.php";
 ?>
 
-<div class="container">
-    <h2 style="margin-bottom: 30px;">Menu Manager (Admin)</h2>
+<section class="container py-4 py-lg-5">
+    <h1 class="h2 mb-4">Menu Manager (Admin)</h1>
 
     <?php if ($message): ?>
-        <div style="background: #c8e6c9; color: #2e7d32; padding: 15px; border-radius: 5px; margin-bottom: 20px;"><?php echo htmlspecialchars($message); ?></div>
+        <div class="alert alert-success" role="status"><?php echo htmlspecialchars($message); ?></div>
     <?php endif; ?>
 
     <?php if ($error): ?>
-        <div style="background: #ffcdd2; color: #c62828; padding: 15px; border-radius: 5px; margin-bottom: 20px;"><?php echo htmlspecialchars($error); ?></div>
+        <div class="alert alert-danger" role="alert"><?php echo htmlspecialchars($error); ?></div>
     <?php endif; ?>
 
     <!-- Add New Item Form -->
-    <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 40px;">
-        <h3 style="margin-top: 0; color: var(--primary-color);">Add New Coffee Item</h3>
-        <form action="admin_menu.php" method="POST" enctype="multipart/form-data">
+    <div class="card border-0 shadow-sm rounded-4 mb-5">
+        <div class="card-body p-4">
+        <h2 class="h4 mb-4">Add New Coffee Item</h2>
+        <form action="admin_menu.php" method="POST" enctype="multipart/form-data" class="vstack gap-3">
             <input type="hidden" name="action" value="add">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Name</label>
-                    <input type="text" name="name" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="item-name" class="form-label fw-semibold">Name</label>
+                    <input type="text" id="item-name" name="name" class="form-control" required>
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Price ($)</label>
-                    <input type="number" step="0.01" name="price" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <div class="col-md-6">
+                    <label for="item-price" class="form-label fw-semibold">Price ($)</label>
+                    <input type="number" id="item-price" step="0.01" min="0.01" name="price" class="form-control" required>
                 </div>
             </div>
-            <div style="margin-bottom: 15px;">
-                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Description</label>
-                <textarea name="description" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; height: 80px;"></textarea>
+            <div>
+                <label for="item-description" class="form-label fw-semibold">Description</label>
+                <textarea id="item-description" name="description" class="form-control" rows="3" required></textarea>
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Category</label>
-                    <select name="category" required class="form-select">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="item-category" class="form-label fw-semibold">Category</label>
+                    <select id="item-category" name="category" required class="form-select">
                         <option value="Hot Coffee">Hot Coffee</option>
                         <option value="Iced Drinks">Iced Drinks</option>
                         <option value="Pastries">Pastries</option>
                     </select>
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Calories (kcal)</label>
-                    <input type="number" min="0" name="calories" class="form-control">
+                <div class="col-md-6">
+                    <label for="item-calories" class="form-label fw-semibold">Calories (kcal)</label>
+                    <input type="number" min="0" id="item-calories" name="calories" class="form-control">
                 </div>
             </div>
-            <div style="margin-bottom: 15px;">
-                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Ingredients</label>
-                <input type="text" name="ingredients" class="form-control" placeholder="Comma-separated ingredients">
+            <div>
+                <label for="item-ingredients" class="form-label fw-semibold">Ingredients</label>
+                <input type="text" id="item-ingredients" name="ingredients" class="form-control" placeholder="Comma-separated ingredients">
             </div>
-            <div style="margin-bottom: 15px;">
-                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Product Image</label>
-                <input type="file" name="image" accept="image/*" required style="width: 100%;">
+            <div>
+                <label for="item-image" class="form-label fw-semibold">Product Image</label>
+                <input type="file" id="item-image" name="image" accept="image/*" class="form-control" required>
             </div>
-            <button type="submit" style="background-color: #4e342e; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Add to Menu</button>
+            <div><button type="submit" class="btn btn-warning rounded-pill px-4 fw-semibold">Add to Menu</button></div>
         </form>
+        </div>
     </div>
 
     <!-- Existing Items Table -->
-    <h3>Current Menu Items</h3>
-    <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-            <thead style="background-color: #f8f8f8; color: var(--primary-color);">
+    <h2 class="h4 mb-3">Current Menu Items</h2>
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="table-responsive rounded-4">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
                 <tr>
-                    <th style="padding: 15px; text-align: left;">Image</th>
-                    <th style="padding: 15px; text-align: left;">Name</th>
-                    <th style="padding: 15px; text-align: left;">Category</th>
-                    <th style="padding: 15px; text-align: left;">Description</th>
-                    <th style="padding: 15px; text-align: left;">Price</th>
-                    <th style="padding: 15px; text-align: center;">Actions</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col" class="text-center">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($items as $item): ?>
-                    <tr style="border-bottom: 1px solid #eee;">
-                        <td style="padding: 10px;">
-                            <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                    <tr>
+                        <td>
+                            <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" width="50" height="50" class="rounded object-fit-cover">
                         </td>
-                        <td style="padding: 15px; font-weight: bold;"><?php echo htmlspecialchars($item['name']); ?></td>
-                        <td style="padding: 15px;"><?php echo htmlspecialchars($item['category']); ?></td>
-                        <td style="padding: 15px; font-size: 0.9rem; color: #666;"><?php echo htmlspecialchars($item['description']); ?></td>
-                        <td style="padding: 15px;">$<?php echo number_format($item['price'], 2); ?></td>
-                        <td style="padding: 15px; text-align: center;">
-                            <a href="admin_edit_item.php?id=<?php echo $item['id']; ?>" style="display: inline-block; background: #795548; color: white; padding: 5px 10px; text-decoration: none; border-radius: 3px; font-size: 0.8rem; margin-right: 5px;">Edit</a>
-                            <form action="admin_menu.php" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this item?')">
+                        <td class="fw-semibold"><?php echo htmlspecialchars($item['name']); ?></td>
+                        <td><?php echo htmlspecialchars($item['category']); ?></td>
+                        <td class="text-secondary"><?php echo htmlspecialchars($item['description']); ?></td>
+                        <td class="text-nowrap">$<?php echo number_format($item['price'], 2); ?></td>
+                        <td class="text-center">
+                            <div class="d-inline-flex gap-2">
+                            <a href="admin_edit_item.php?id=<?php echo $item['id']; ?>" class="btn btn-outline-dark btn-sm">Edit</a>
+                            <form action="admin_menu.php" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this item?')">
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="item_id" value="<?php echo (int)$item['id']; ?>">
-                                <button type="submit" style="background: #e53935; color: white; padding: 5px 10px; border: 0; border-radius: 3px; font-size: 0.8rem; cursor: pointer;">Delete</button>
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
                             </form>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>
                 <?php if (empty($items)): ?>
                     <tr>
-                        <td colspan="6" style="padding: 30px; text-align: center; color: #999;">No items found in the menu.</td>
+                        <td colspan="6" class="text-center text-secondary py-4">No items found in the menu.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
+        </div>
     </div>
-</div>
+</section>
 
 <?php include "../includes/footer.php"; ?>
