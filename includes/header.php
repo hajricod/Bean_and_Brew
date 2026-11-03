@@ -18,6 +18,7 @@
         .site-nav .nav-link { color: rgba(255,255,255,.82); }
         .site-nav .nav-link:hover, .site-nav .nav-link:focus { color: var(--coffee-gold); }
         .navbar-tools { flex-shrink: 0; }
+        .navbar-toggler { width: 40px; height: 40px; padding: 0; margin: .25rem; display: grid; place-items: center; border-radius: 50%; }
         .cart-link { display: inline-flex; align-items: center; gap: .45rem; color: var(--coffee-ink) !important; background: var(--coffee-gold); border: 1px solid var(--coffee-gold); border-radius: 999px; padding: .45rem .8rem !important; font-size: .9rem; font-weight: 700; line-height: 1; text-decoration: none; transition: background-color .2s ease, border-color .2s ease, transform .2s ease; }
         .cart-link:hover, .cart-link:focus { color: var(--coffee-ink) !important; background: #e6bb86; border-color: #e6bb86; transform: translateY(-1px); }
         .cart-link svg { width: 1.1rem; height: 1.1rem; }
@@ -43,7 +44,7 @@
         <a class="navbar-brand fs-4" href="index.php">Bean <span style="color: var(--coffee-gold);">&</span> Brew</a>
         <div class="offcanvas offcanvas-lg offcanvas-end site-navigation" tabindex="-1" id="siteNavigation" aria-labelledby="siteNavigationLabel">
             <div class="offcanvas-header d-lg-none">
-                <h2 class="offcanvas-title fs-5" id="siteNavigationLabel">Navigation</h2>
+                <!-- <h2 class="offcanvas-title fs-5" id="siteNavigationLabel">Navigation</h2> -->
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close navigation"></button>
             </div>
             <div class="offcanvas-body p-0">
