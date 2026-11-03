@@ -1,5 +1,6 @@
 <?php
 // header.php
+$current_page = basename($_SERVER['SCRIPT_NAME'] ?? '');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,9 +26,44 @@
         .cart-count { min-width: 1.25rem; height: 1.25rem; display: inline-grid; place-items: center; padding: 0 .25rem; border-radius: 999px; background: var(--coffee-ink); color: #fff; font-size: .7rem; }
         .site-navigation { --bs-offcanvas-width: min(85vw, 360px); background: var(--coffee-ink); }
         .site-navigation .offcanvas-title { color: #fff; font-weight: 750; }
+        .site-navigation .offcanvas-body { display: flex; flex-direction: column; }
+        .account-menu { flex-shrink: 0; }
+        .account-toggle { display: flex; align-items: center; gap: .75rem; width: 100%; color: var(--coffee-gold); text-align: left; }
+        .account-toggle:hover, .account-toggle:focus { color: var(--coffee-gold); }
+        .account-avatar { width: 2.5rem; height: 2.5rem; flex: 0 0 2.5rem; display: grid; place-items: center; border-radius: 50%; background: var(--coffee-gold); color: var(--coffee-ink); font-weight: 700; }
+        .account-copy { display: grid; min-width: 0; }
+        .account-name { font-weight: 600; }
+        .account-email { overflow: hidden; color: rgba(255,255,255,.6); font-size: .8rem; text-overflow: ellipsis; }
+        .account-menu .dropdown-menu { background-color: var(--coffee-gold); }
+        .account-menu .dropdown-item:hover,
+        .account-menu .dropdown-item:focus,
+        .account-menu .dropdown-item:active,
+        .account-menu .dropdown-item.active { color: var(--coffee-gold); background-color: var(--coffee-ink); }
         @media (max-width: 991.98px) {
-            .site-navigation .navbar-nav { padding: .5rem 1rem 1rem; }
-            .site-navigation .nav-link { padding: .8rem 1rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+            .site-navigation .offcanvas-header { min-height: 76px; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,.12); }
+            .site-navigation .offcanvas-body { height: calc(100% - 76px); min-height: 0; overflow-y: auto; }
+            .site-navigation .navbar-nav { width: 100%; padding: 1rem; }
+            .site-navigation .navbar-nav .nav-link { padding: .9rem 1rem; border: 0; border-radius: .75rem; color: rgba(255,255,255,.82); font-weight: 500; }
+            .site-navigation .navbar-nav .nav-link:hover, .site-navigation .navbar-nav .nav-link:focus { color: #fff; background: rgba(255,255,255,.08); }
+            .site-navigation .navbar-nav .nav-link.active,
+            .site-navigation .navbar-nav .nav-link.active:hover,
+            .site-navigation .navbar-nav .nav-link.active:focus { color: var(--coffee-ink); background: var(--coffee-gold); }
+            .site-navigation .navbar-nav.ms-auto { margin-left: 0 !important; }
+            .account-menu { position: relative; margin-top: auto; padding: 1rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom)); border-top: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04); }
+            .account-toggle { min-height: 3.5rem; padding: .5rem; border-radius: .75rem; }
+            .account-toggle:hover, .account-toggle:focus { background: rgba(255,255,255,.08); }
+            .account-menu .dropdown-menu { width: 100%; margin-bottom: .5rem; }
+            .account-menu.dropup .dropdown-menu { top: auto; bottom: 100%; }
+        }
+        @media (min-width: 992px) {
+            .site-navigation .offcanvas-body { flex-direction: row; align-items: center; }
+            .site-navigation .navbar-nav .nav-link.active,
+            .site-navigation .navbar-nav .nav-link.active:hover,
+            .site-navigation .navbar-nav .nav-link.active:focus { color: var(--coffee-gold); background: transparent; }
+            .account-menu { margin-left: .5rem; }
+            .account-toggle { padding: .35rem .5rem; border-radius: 999px; }
+            .account-avatar { width: 2rem; height: 2rem; flex-basis: 2rem; }
+            .account-email { display: none; }
         }
         .hero-panel { min-height: 390px; display: grid; align-items: center; color: white; background: linear-gradient(90deg, rgba(28,20,16,.82), rgba(28,20,16,.2)), url('assets/images/hero.jpg') center/cover; }
         .product-card { overflow: hidden; border: 1px solid rgba(65,44,34,.08); border-radius: 1rem; transition: transform .2s ease, box-shadow .2s ease; }
@@ -42,28 +78,42 @@
 <nav class="navbar navbar-expand-lg navbar-dark site-nav sticky-top">
     <div class="container">
         <a class="navbar-brand fs-4" href="index.php">Bean <span style="color: var(--coffee-gold);">&</span> Brew</a>
-        <div class="offcanvas offcanvas-lg offcanvas-end site-navigation" tabindex="-1" id="siteNavigation" aria-labelledby="siteNavigationLabel">
+        <div class="offcanvas offcanvas-lg offcanvas-end site-navigation" tabindex="-1" id="siteNavigation" aria-label="Site navigation">
             <div class="offcanvas-header d-lg-none">
-                <!-- <h2 class="offcanvas-title fs-5" id="siteNavigationLabel">Navigation</h2> -->
+                <div>
+                    <a class="navbar-brand fs-5 text-decoration-none" href="index.php">Bean <span style="color: var(--coffee-gold);">&</span> Brew</a>
+                    <div class="small text-white-50">Explore the shop</div>
+                </div>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close navigation"></button>
             </div>
             <div class="offcanvas-body p-0">
-            <div class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-                <a class="nav-link" href="index.php">Home</a>
-                <a class="nav-link" href="menu.php">Menu</a>
-                <a class="nav-link" href="about.php">About</a>
-                <a class="nav-link" href="contact.php">Contact</a>
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <?php if (($_SESSION['user_role'] ?? 'user') === 'admin'): ?>
-                        <a class="nav-link" href="admin_dashboard.php">Dashboard</a>
+                <div class="navbar-nav nav-pills ms-auto align-items-lg-center gap-lg-2">
+                    <a class="nav-link<?php echo $current_page === 'index.php' ? ' active' : ''; ?>" href="index.php"<?php echo $current_page === 'index.php' ? ' aria-current="page"' : ''; ?>>Home</a>
+                    <a class="nav-link<?php echo $current_page === 'menu.php' ? ' active' : ''; ?>" href="menu.php"<?php echo $current_page === 'menu.php' ? ' aria-current="page"' : ''; ?>>Menu</a>
+                    <a class="nav-link<?php echo $current_page === 'about.php' ? ' active' : ''; ?>" href="about.php"<?php echo $current_page === 'about.php' ? ' aria-current="page"' : ''; ?>>About</a>
+                    <a class="nav-link<?php echo $current_page === 'contact.php' ? ' active' : ''; ?>" href="contact.php"<?php echo $current_page === 'contact.php' ? ' aria-current="page"' : ''; ?>>Contact</a>
+                    <?php if (!isset($_SESSION['user_id'])): ?>
+                        <a class="nav-link" href="login.php">Login</a>
                     <?php endif; ?>
-                    <span class="nav-link text-white-50">Hi, <?php echo htmlspecialchars($_SESSION['user_name']); ?></span>
-                    <a class="nav-link" href="logout.php">Logout</a>
-                <?php else: ?>
-                    <a class="nav-link" href="login.php">Login</a>
-                    <a class="btn btn-sm btn-warning rounded-pill px-3" href="register.php">Join us</a>
+                </div>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <?php $account_name = $_SESSION['user_name'] ?? 'Account'; ?>
+                    <div class="dropdown account-menu">
+                        <button class="account-toggle btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="account-avatar" aria-hidden="true"><?php echo htmlspecialchars(strtoupper(substr($account_name, 0, 1)), ENT_QUOTES, 'UTF-8'); ?></span>
+                            <span class="account-copy">
+                                <span class="account-name">Hi, <?php echo htmlspecialchars($account_name, ENT_QUOTES, 'UTF-8'); ?></span>
+                                <span class="account-email"><?php echo htmlspecialchars($_SESSION['user_email'] ?? '', ENT_QUOTES, 'UTF-8'); ?></span>
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <?php if (($_SESSION['user_role'] ?? 'user') === 'admin'): ?>
+                                <li><a class="dropdown-item" href="admin_dashboard.php">Admin dashboard</a></li>
+                            <?php endif; ?>
+                            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                        </ul>
+                    </div>
                 <?php endif; ?>
-            </div>
             </div>
         </div>
         <div class="navbar-tools d-flex align-items-center gap-2">
@@ -82,4 +132,4 @@
         </div>
     </div>
 </nav>
-<main class="<?php echo basename($_SERVER['SCRIPT_NAME'] ?? '') === 'index.php' ? 'home-page' : ''; ?>">
+<main class="<?php echo $current_page === 'index.php' ? 'home-page' : ''; ?>">

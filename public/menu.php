@@ -31,14 +31,16 @@ include "../includes/header.php";
                             <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" style="width: 100%; height: 150px; object-fit: cover;">
                         </div>
                     </a>
-                    <div class="card-body d-flex flex-column p-4">
+                    <div class="card-body d-flex flex-column flex-grow-1 p-4">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="badge rounded-pill text-bg-light border"><?php echo htmlspecialchars($item['category']); ?></span>
                             <span class="fw-semibold">$<?php echo number_format($item['price'], 2); ?></span>
                         </div>
                         <h2 class="h4 card-title mb-2"><a class="text-decoration-none text-dark" href="product.php?id=<?php echo (int)$item['id']; ?>"><?php echo htmlspecialchars($item['name']); ?></a></h2>
-                        <p class="text-secondary flex-grow-1"><?php echo htmlspecialchars($item['description']); ?></p>
-                        <div class="d-flex gap-2 mt-2">
+                        <p class="text-secondary mb-0"><?php echo htmlspecialchars($item['description']); ?></p>
+                    </div>
+                    <div class="card-footer bg-white border-top-0 p-4 pt-0">
+                        <div class="d-flex gap-2">
                             <a class="btn btn-outline-dark rounded-pill flex-grow-1" href="product.php?id=<?php echo (int)$item['id']; ?>">Details</a>
                             <form action="cart_handler.php" method="POST" class="js-cart-form flex-grow-1">
                                 <input type="hidden" name="action" value="add">

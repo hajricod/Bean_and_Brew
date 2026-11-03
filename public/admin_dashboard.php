@@ -9,26 +9,44 @@ $page_title = "Admin Dashboard | Bean & Brew";
 include "../includes/header.php";
 ?>
 
-<div class="container">
-    <h2 style="color: var(--primary-color);">Admin Dashboard</h2>
-    <p>Manage the shop from one place.</p>
-
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin: 30px 0;">
-        <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-            <h3 style="margin-top: 0;">Menu Items</h3>
-            <p style="font-size: 2rem; margin: 0; color: var(--secondary-color);"><?php echo $menu_count; ?></p>
+<section class="container py-4 py-lg-5">
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-end gap-3 mb-4">
+        <div>
+            <p class="text-uppercase small fw-semibold text-secondary mb-2">Shop management</p>
+            <h1 class="display-6 fw-bold mb-2">Admin Dashboard</h1>
+            <p class="text-secondary mb-0">Manage the shop from one place.</p>
         </div>
-        <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-            <h3 style="margin-top: 0;">Orders</h3>
-            <p style="font-size: 2rem; margin: 0; color: var(--secondary-color);"><?php echo $order_count; ?></p>
+        <span class="badge rounded-pill text-bg-light border px-3 py-2">Admin</span>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <article class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4 p-lg-5">
+                    <h2 class="h5 card-title text-secondary">Menu Items</h2>
+                    <p class="display-4 fw-semibold mb-0"><?php echo $menu_count; ?></p>
+                </div>
+            </article>
+        </div>
+        <div class="col-md-6">
+            <article class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4 p-lg-5">
+                    <h2 class="h5 card-title text-secondary">Orders</h2>
+                    <p class="display-4 fw-semibold mb-0"><?php echo $order_count; ?></p>
+                </div>
+            </article>
         </div>
     </div>
 
-    <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-        <h3 style="margin-top: 0;">Menu Management</h3>
-        <p>Add new coffees, edit prices and descriptions, or remove items.</p>
-        <a href="admin_menu.php" style="display: inline-block; background: var(--primary-color); color: white; padding: 10px 18px; border-radius: 5px; text-decoration: none; font-weight: bold;">Manage Menu</a>
-    </div>
-</div>
+    <article class="card border-0 shadow-sm rounded-4">
+        <div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 p-4 p-lg-5">
+            <div>
+                <h2 class="h4 card-title">Menu Management</h2>
+                <p class="card-text text-secondary mb-0">Add new coffees, edit prices and descriptions, or remove items.</p>
+            </div>
+            <a href="admin_menu.php" class="btn btn-warning rounded-pill px-4 fw-semibold">Manage Menu</a>
+        </div>
+    </article>
+</section>
 
 <?php include "../includes/footer.php"; ?>

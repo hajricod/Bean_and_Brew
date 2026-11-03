@@ -18,5 +18,21 @@
 </div>
 <script src="assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="assets/js/cart.js"></script>
+<script>
+    (function () {
+        var accountMenu = document.querySelector('.account-menu');
+        if (!accountMenu) {
+            return;
+        }
+
+        var mobileLayout = window.matchMedia('(max-width: 991.98px)');
+        var updateAccountMenuPlacement = function () {
+            accountMenu.classList.toggle('dropup', mobileLayout.matches);
+        };
+
+        updateAccountMenuPlacement();
+        mobileLayout.addEventListener('change', updateAccountMenuPlacement);
+    })();
+</script>
 </body>
 </html>
