@@ -64,6 +64,12 @@
             text-decoration: none;
         }
 
+        .user-nav {
+            margin-left: 20px;
+            padding-left: 20px;
+            border-left: 1px solid rgba(255,255,255,0.3);
+        }
+
         .container {
             max-width: 1100px;
             margin: 40px auto;
@@ -89,7 +95,19 @@
         <a href="about.php">About</a>
         <a href="contact.php">Contact</a>
         <a href="cart.php" class="cart-link">
-            🛒 Cart (<?php echo isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0; ?>)
+            ?? Cart (<?php echo isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0; ?>)
         </a>
+
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <div class="user-nav">
+                <span style="font-size: 0.9rem; opacity: 0.8;">Hello, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!</span>
+                <a href="logout.php" style="margin-left: 10px; font-size: 0.9rem;">Logout</a>
+            </div>
+        <?php else: ?>
+            <div class="user-nav">
+                <a href="login.php" style="font-size: 0.9rem;">Login</a>
+                <a href="register.php" style="font-size: 0.9rem; margin-left: 10px;">Register</a>
+            </div>
+        <?php endif; ?>
     </nav>
 </header>
