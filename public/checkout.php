@@ -23,6 +23,15 @@ foreach ($_SESSION['cart'] as $id => $quantity) {
     }
 }
 
+// Pre-fill information if user is logged in
+$prefill_name = "";
+$prefill_email = "";
+
+if (isset($_SESSION['user_id'])) {
+    $prefill_name = $_SESSION['user_name'];
+    $prefill_email = $_SESSION['user_email'];
+}
+
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'] ?? '';
@@ -93,11 +102,11 @@ include "../includes/header.php";
             <form action="checkout.php" method="POST">
                 <div style="margin-bottom: 15px;">
                     <label for="name" style="display: block; font-weight: bold; margin-bottom: 5px;">Full Name</label>
-                    <input type="text" name="name" id="name" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" placeholder="John Doe">
+                    <input type="text" name="name" id="name" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" placeholder="John Doe" value="<?php echo htmlspecialchars($prefill_name); ?>">
                 </div>
                 <div style="margin-bottom: 20px;">
                     <label for="email" style="display: block; font-weight: bold; margin-bottom: 5px;">Email Address</label>
-                    <input type="email" name="email" id="email" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" placeholder="john@example.com">
+                    <input type="email" name="email" id="email" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" placeholder="john@example.com" value="<?php echo htmlspecialchars($prefill_email); ?>">
                 </div>
                 <button type="submit" style="width: 100%; background-color: #4e342e; color: white; padding: 15px; border: none; border-radius: 5px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">Place Order</button>
             </form>
