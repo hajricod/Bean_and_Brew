@@ -12,7 +12,6 @@ include "../includes/header.php";
             <h1 class="display-5 fw-bold mb-2">Find your new favorite.</h1>
             <p class="text-secondary mb-0">Coffee, cold drinks, and bakery treats made for your everyday ritual.</p>
         </div>
-        <span class="badge rounded-pill text-bg-light border px-3 py-2"><?php echo count($coffee_items); ?> menu favorites</span>
     </div>
 
     <div class="d-flex flex-wrap gap-2 mb-4" role="group" aria-label="Filter menu by category" data-category-filters>
