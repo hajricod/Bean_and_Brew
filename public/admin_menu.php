@@ -73,7 +73,15 @@ include "../includes/header.php";
 ?>
 
 <section class="container py-4 py-lg-5">
-    <h1 class="h2 mb-4">Menu Manager (Admin)</h1>
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
+        <div>
+            <p class="text-uppercase small fw-semibold text-secondary mb-2">Shop management</p>
+            <h1 class="h2 mb-0">Menu Manager</h1>
+        </div>
+        <button type="button" class="btn btn-warning rounded-pill px-4 fw-semibold" data-bs-toggle="modal" data-bs-target="#addItemModal">
+            <span aria-hidden="true">+</span> Add menu item
+        </button>
+    </div>
 
     <?php if ($message): ?>
         <div class="alert alert-success" role="status"><?php echo htmlspecialchars($message); ?></div>
@@ -83,50 +91,60 @@ include "../includes/header.php";
         <div class="alert alert-danger" role="alert"><?php echo htmlspecialchars($error); ?></div>
     <?php endif; ?>
 
-    <!-- Add New Item Form -->
-    <div class="card border-0 shadow-sm rounded-4 mb-5">
-        <div class="card-body p-4">
-        <h2 class="h4 mb-4">Add New Coffee Item</h2>
-        <form action="admin_menu.php" method="POST" enctype="multipart/form-data" class="vstack gap-3">
-            <input type="hidden" name="action" value="add">
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <label for="item-name" class="form-label fw-semibold">Name</label>
-                    <input type="text" id="item-name" name="name" class="form-control" required>
+    <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content border-0 rounded-4 shadow">
+                <div class="modal-header border-0 px-4 pt-4 pb-0">
+                    <div>
+                        <p class="text-uppercase small fw-semibold text-secondary mb-1">Menu management</p>
+                        <h2 class="modal-title h4 fw-bold" id="addItemModalLabel">Add a menu item</h2>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="col-md-6">
-                    <label for="item-price" class="form-label fw-semibold">Price ($)</label>
-                    <input type="number" id="item-price" step="0.01" min="0.01" name="price" class="form-control" required>
-                </div>
+                <form action="admin_menu.php" method="POST" enctype="multipart/form-data" class="vstack">
+                    <div class="modal-body px-4 py-4">
+                        <input type="hidden" name="action" value="add">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="item-name" class="form-label fw-semibold">Name</label>
+                                <input type="text" id="item-name" name="name" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="item-price" class="form-label fw-semibold">Price ($)</label>
+                                <input type="number" id="item-price" step="0.01" min="0.01" name="price" class="form-control" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="item-description" class="form-label fw-semibold">Description</label>
+                                <textarea id="item-description" name="description" class="form-control" rows="3" required></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="item-category" class="form-label fw-semibold">Category</label>
+                                <select id="item-category" name="category" required class="form-select">
+                                    <option value="Hot Coffee">Hot Coffee</option>
+                                    <option value="Iced Drinks">Iced Drinks</option>
+                                    <option value="Pastries">Pastries</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="item-calories" class="form-label fw-semibold">Calories (kcal)</label>
+                                <input type="number" min="0" id="item-calories" name="calories" class="form-control">
+                            </div>
+                            <div class="col-12">
+                                <label for="item-ingredients" class="form-label fw-semibold">Ingredients</label>
+                                <input type="text" id="item-ingredients" name="ingredients" class="form-control" placeholder="Comma-separated ingredients">
+                            </div>
+                            <div class="col-12">
+                                <label for="item-image" class="form-label fw-semibold">Product Image</label>
+                                <input type="file" id="item-image" name="image" accept="image/*" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 px-4 pb-4 pt-0">
+                        <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-warning rounded-pill px-4 fw-semibold">Add to Menu</button>
+                    </div>
+                </form>
             </div>
-            <div>
-                <label for="item-description" class="form-label fw-semibold">Description</label>
-                <textarea id="item-description" name="description" class="form-control" rows="3" required></textarea>
-            </div>
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <label for="item-category" class="form-label fw-semibold">Category</label>
-                    <select id="item-category" name="category" required class="form-select">
-                        <option value="Hot Coffee">Hot Coffee</option>
-                        <option value="Iced Drinks">Iced Drinks</option>
-                        <option value="Pastries">Pastries</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="item-calories" class="form-label fw-semibold">Calories (kcal)</label>
-                    <input type="number" min="0" id="item-calories" name="calories" class="form-control">
-                </div>
-            </div>
-            <div>
-                <label for="item-ingredients" class="form-label fw-semibold">Ingredients</label>
-                <input type="text" id="item-ingredients" name="ingredients" class="form-control" placeholder="Comma-separated ingredients">
-            </div>
-            <div>
-                <label for="item-image" class="form-label fw-semibold">Product Image</label>
-                <input type="file" id="item-image" name="image" accept="image/*" class="form-control" required>
-            </div>
-            <div><button type="submit" class="btn btn-warning rounded-pill px-4 fw-semibold">Add to Menu</button></div>
-        </form>
         </div>
     </div>
 
@@ -177,5 +195,13 @@ include "../includes/header.php";
         </div>
     </div>
 </section>
+
+<?php if ($error !== "" && ($_POST['action'] ?? '') === 'add'): ?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    bootstrap.Modal.getOrCreateInstance(document.getElementById('addItemModal')).show();
+});
+</script>
+<?php endif; ?>
 
 <?php include "../includes/footer.php"; ?>

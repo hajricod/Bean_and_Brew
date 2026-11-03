@@ -34,7 +34,24 @@ $current_page = basename($_SERVER['SCRIPT_NAME'] ?? '');
         .account-copy { display: grid; min-width: 0; }
         .account-name { font-weight: 600; }
         .account-email { overflow: hidden; color: rgba(255,255,255,.6); font-size: .8rem; text-overflow: ellipsis; }
-        .account-menu .dropdown-menu { background-color: var(--coffee-gold); }
+        .account-menu .dropdown-menu {
+            padding: .5rem;
+            border: 1px solid rgba(43,33,29,.12);
+            border-radius: 1rem;
+            background-color: var(--coffee-gold);
+            box-shadow: 0 .75rem 2rem rgba(0,0,0,.2);
+        }
+        .account-menu .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .7rem .85rem;
+            border-radius: .65rem;
+            color: var(--coffee-ink);
+            font-weight: 600;
+            transition: color .15s ease, background-color .15s ease;
+        }
+        .account-menu .dropdown-item svg { width: 1.1rem; height: 1.1rem; flex: 0 0 1.1rem; }
         .account-menu .dropdown-item:hover,
         .account-menu .dropdown-item:focus,
         .account-menu .dropdown-item:active,
@@ -52,7 +69,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME'] ?? '');
             .account-menu { position: relative; margin-top: auto; padding: 1rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom)); border-top: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.04); }
             .account-toggle { min-height: 3.5rem; padding: .5rem; border-radius: .75rem; }
             .account-toggle:hover, .account-toggle:focus { background: rgba(255,255,255,.08); }
-            .account-menu .dropdown-menu { width: 100%; margin-bottom: .5rem; }
+            .account-menu .dropdown-menu { right: 1rem; left: 1rem; width: auto; margin-bottom: .5rem; }
             .account-menu.dropup .dropdown-menu { top: auto; bottom: 100%; }
         }
         @media (min-width: 992px) {
@@ -108,9 +125,19 @@ $current_page = basename($_SERVER['SCRIPT_NAME'] ?? '');
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <?php if (($_SESSION['user_role'] ?? 'user') === 'admin'): ?>
-                                <li><a class="dropdown-item" href="admin_dashboard.php">Admin dashboard</a></li>
+                                <li><a class="dropdown-item" href="admin_dashboard.php">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/>
+                                    </svg>
+                                    <span>Admin dashboard</span>
+                                </a></li>
                             <?php endif; ?>
-                            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                            <li><a class="dropdown-item" href="logout.php">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>
+                                </svg>
+                                <span>Logout</span>
+                            </a></li>
                         </ul>
                     </div>
                 <?php endif; ?>

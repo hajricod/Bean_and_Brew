@@ -16,7 +16,6 @@ include "../includes/header.php";
             <h1 class="display-6 fw-bold mb-2">Admin Dashboard</h1>
             <p class="text-secondary mb-0">Manage the shop from one place.</p>
         </div>
-        <span class="badge rounded-pill text-bg-light border px-3 py-2">Admin</span>
     </div>
 
     <div class="row g-4 mb-4">
