@@ -6,7 +6,7 @@ Bean & Brew is a small PHP coffee-shop website with a product catalog, customer 
 
 - Browse featured drinks and pastries, filter the menu by category, and view product details.
 - Register and log in to a customer account.
-- Add products to a session-based cart, remove items, or clear the cart.
+- Add products to a session-based cart, remove items, or clear the cart
 - Submit an order and view its confirmation.
 - Manage menu items from the admin area, including uploading product images.
 - Use a responsive interface built with locally bundled Bootstrap 5 assets.
