@@ -8,7 +8,6 @@ $total_price = 0;
 
 if (!empty($_SESSION['cart'])) {
     foreach ($_SESSION['cart'] as $id => $quantity) {
-        // Find the item in the database
         $stmt = $pdo->prepare("SELECT * FROM coffee_items WHERE id = ?");
         $stmt->execute([$id]);
         $item = $stmt->fetch();
@@ -34,8 +33,8 @@ if (!empty($_SESSION['cart'])) {
     <?php else: ?>
         <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
             <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
-                <thead>
-                    <tr style="border-bottom: 2px solid #eee; text-align: left;">
+                <thead style="border-bottom: 2px solid #eee;">
+                    <tr style="text-align: left;">
                         <th style="padding: 15px 0;">Item</th>
                         <th style="padding: 15px 0;">Price</th>
                         <th style="padding: 15px 0;">Quantity</th>
@@ -75,7 +74,7 @@ if (!empty($_SESSION['cart'])) {
                         <input type="hidden" name="action" value="clear">
                         <button type="submit" style="background: none; border: 1px solid #ccc; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Clear Cart</button>
                     </form>
-                    <button onclick="alert('Checkout functionality coming soon!')" style="background-color: #4e342e; color: white; padding: 10px 30px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Checkout</button>
+                    <a href="checkout.php" style="display: inline-block; background-color: #4e342e; color: white; padding: 10px 30px; border-radius: 5px; text-decoration: none; font-weight: bold;">Checkout</a>
                 </div>
             </div>
         </div>
