@@ -95,7 +95,7 @@
         <a href="about.php">About</a>
         <a href="contact.php">Contact</a>
         <a href="cart.php" class="cart-link">
-            ?? Cart (<?php echo isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0; ?>)
+            Cart (<?php echo isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0; ?>)
         </a>
 
         <?php if (isset($_SESSION['user_id'])): ?>
