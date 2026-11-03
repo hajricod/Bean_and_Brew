@@ -73,7 +73,7 @@ include "../includes/header.php";
 ?>
 
 <div class="container">
-    <h2 style="margin-bottom: 30px;">☕ Menu Manager (Admin)</h2>
+    <h2 style="margin-bottom: 30px;">Menu Manager (Admin)</h2>
 
     <?php if ($message): ?>
         <div style="background: #c8e6c9; color: #2e7d32; padding: 15px; border-radius: 5px; margin-bottom: 20px;"><?php echo htmlspecialchars($message); ?></div>
@@ -146,11 +146,7 @@ include "../includes/header.php";
                 <?php foreach ($items as $item): ?>
                     <tr style="border-bottom: 1px solid #eee;">
                         <td style="padding: 10px;">
-                            <?php if (hasLocalCatalogImage($item['image'])): ?>
-                                <img src="assets/images/<?php echo rawurlencode($item['image']); ?>" alt="" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
-                            <?php else: ?>
-                                <span style="font-size: 2rem;"><?php echo htmlspecialchars($item['image']); ?></span>
-                            <?php endif; ?>
+                            <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
                         </td>
                         <td style="padding: 15px; font-weight: bold;"><?php echo htmlspecialchars($item['name']); ?></td>
                         <td style="padding: 15px;"><?php echo htmlspecialchars($item['category']); ?></td>

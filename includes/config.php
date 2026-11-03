@@ -40,6 +40,14 @@ function hasLocalCatalogImage($filename) {
         && is_file(__DIR__ . '/../public/assets/images/' . $filename);
 }
 
+function catalogImageUrl($filename) {
+    if (hasLocalCatalogImage($filename)) {
+        return 'assets/images/' . rawurlencode($filename);
+    }
+
+    return 'assets/images/product-placeholder.svg';
+}
+
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }

@@ -121,11 +121,7 @@ include "../includes/header.php";
                 <div style="margin-bottom: 20px;">
                     <label style="display: block; font-weight: bold; margin-bottom: 5px;">Current Image</label>
                     <div style="margin-bottom: 10px;">
-                        <?php if (hasLocalCatalogImage($item['image'])): ?>
-                            <img src="assets/images/<?php echo rawurlencode($item['image']); ?>" alt="Current product image" style="height: 80px; border-radius: 5px; border: 1px solid #ddd;">
-                        <?php else: ?>
-                            <span aria-label="Current product icon" style="font-size: 3rem;"><?php echo htmlspecialchars($item['image']); ?></span>
-                        <?php endif; ?>
+                        <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="Current product image" style="height: 80px; border-radius: 5px; border: 1px solid #ddd;">
                     </div>
                     <input type="hidden" name="existing_image" value="<?php echo htmlspecialchars($item['image']); ?>">
                     <label style="display: block; font-weight: bold; margin-bottom: 5px; color: var(--secondary-color);">Upload New Image (optional)</label>

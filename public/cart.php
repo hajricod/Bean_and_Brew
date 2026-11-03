@@ -47,7 +47,7 @@ if (!empty($_SESSION['cart'])) {
                         <tr style="border-bottom: 1px solid #eee;">
                             <td style="padding: 15px 0;">
                                 <div style="display: flex; align-items: center; gap: 15px;">
-                                    <span style="font-size: 1.5rem;"><?php echo $item['image']; ?></span>
+                                    <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" style="width: 48px; height: 48px; object-fit: cover; border-radius: 8px;">
                                     <strong><?php echo htmlspecialchars($item['name']); ?></strong>
                                 </div>
                             </td>

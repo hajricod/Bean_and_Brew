@@ -28,11 +28,7 @@ include "../includes/header.php";
                 <article class="card product-card h-100 shadow-sm">
                     <a class="text-decoration-none" href="product.php?id=<?php echo (int)$item['id']; ?>" aria-label="View <?php echo htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8'); ?> details">
                         <div class="product-art" aria-hidden="true">
-                            <?php if (hasLocalCatalogImage($item['image'])): ?>
-                                <img src="assets/images/<?php echo rawurlencode($item['image']); ?>" alt="" style="width: 100%; height: 150px; object-fit: cover;">
-                            <?php else: ?>
-                                <?php echo htmlspecialchars($item['image']); ?>
-                            <?php endif; ?>
+                            <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" style="width: 100%; height: 150px; object-fit: cover;">
                         </div>
                     </a>
                     <div class="card-body d-flex flex-column p-4">

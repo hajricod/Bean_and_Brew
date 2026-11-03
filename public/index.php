@@ -29,11 +29,7 @@ include "../includes/header.php";
                 <article class="card product-card h-100 shadow-sm">
                     <a href="product.php?id=<?php echo (int)$item['id']; ?>" class="text-decoration-none">
                         <div class="product-art" aria-hidden="true">
-                            <?php if (hasLocalCatalogImage($item['image'])): ?>
-                                <img src="assets/images/<?php echo rawurlencode($item['image']); ?>" alt="" style="width: 100%; height: 150px; object-fit: cover;">
-                            <?php else: ?>
-                                <?php echo htmlspecialchars($item['image']); ?>
-                            <?php endif; ?>
+                            <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" style="width: 100%; height: 150px; object-fit: cover;">
                         </div>
                     </a>
                     <div class="card-body p-4">
@@ -59,9 +55,9 @@ include "../includes/header.php";
 
 <section class="container pb-5">
     <div class="row g-3">
-        <div class="col-md-4"><div class="h-100 bg-white rounded-4 p-4 border"><div class="fw-bold mb-2">☕ Carefully brewed</div><p class="text-secondary mb-0">Thoughtful recipes and beans roasted for a balanced cup.</p></div></div>
-        <div class="col-md-4"><div class="h-100 bg-white rounded-4 p-4 border"><div class="fw-bold mb-2">🌱 Good ingredients</div><p class="text-secondary mb-0">Simple, quality ingredients in every drink and pastry.</p></div></div>
-        <div class="col-md-4"><div class="h-100 bg-white rounded-4 p-4 border"><div class="fw-bold mb-2">✨ Your local place</div><p class="text-secondary mb-0">Come by for a quick pick-me-up or stay a little longer.</p></div></div>
+        <div class="col-md-4"><div class="h-100 bg-white rounded-4 p-4 border"><div class="fw-bold mb-2">Carefully brewed</div><p class="text-secondary mb-0">Thoughtful recipes and beans roasted for a balanced cup.</p></div></div>
+        <div class="col-md-4"><div class="h-100 bg-white rounded-4 p-4 border"><div class="fw-bold mb-2">Good ingredients</div><p class="text-secondary mb-0">Simple, quality ingredients in every drink and pastry.</p></div></div>
+        <div class="col-md-4"><div class="h-100 bg-white rounded-4 p-4 border"><div class="fw-bold mb-2">Your local place</div><p class="text-secondary mb-0">Come by for a quick pick-me-up or stay a little longer.</p></div></div>
     </div>
 </section>
 

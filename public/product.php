@@ -23,12 +23,8 @@ include "../includes/header.php";
     <a class="text-decoration-none text-secondary d-inline-block mb-4" href="menu.php">&larr; Back to menu</a>
     <div class="row g-5 align-items-center">
         <div class="col-lg-6">
-            <div class="product-art rounded-5" style="min-height: 360px; font-size: 7rem;" aria-hidden="true">
-                <?php if (hasLocalCatalogImage($item['image'])): ?>
-                    <img src="assets/images/<?php echo rawurlencode($item['image']); ?>" alt="" style="width: 100%; height: 360px; object-fit: cover; border-radius: inherit;">
-                <?php else: ?>
-                    <?php echo htmlspecialchars($item['image']); ?>
-                <?php endif; ?>
+            <div class="product-art rounded-5" style="min-height: 360px;" aria-hidden="true">
+                <img src="<?php echo htmlspecialchars(catalogImageUrl($item['image']), ENT_QUOTES, 'UTF-8'); ?>" alt="" style="width: 100%; height: 360px; object-fit: cover; border-radius: inherit;">
             </div>
         </div>
         <div class="col-lg-6">
