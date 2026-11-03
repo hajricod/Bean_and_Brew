@@ -60,7 +60,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME'] ?? '');
             .site-navigation .navbar-nav .nav-link.active,
             .site-navigation .navbar-nav .nav-link.active:hover,
             .site-navigation .navbar-nav .nav-link.active:focus { color: var(--coffee-gold); background: transparent; }
-            .account-menu { margin-left: .5rem; }
+            .account-menu { margin-left: .5rem; margin-right: .5rem; }
             .account-toggle { padding: .35rem .5rem; border-radius: 999px; }
             .account-avatar { width: 2rem; height: 2rem; flex-basis: 2rem; }
             .account-email { display: none; }
