@@ -17,7 +17,11 @@
         .site-nav .navbar-brand { color: #fff; font-weight: 750; letter-spacing: -.03em; }
         .site-nav .nav-link { color: rgba(255,255,255,.82); }
         .site-nav .nav-link:hover, .site-nav .nav-link:focus { color: var(--coffee-gold); }
-        .cart-link { border: 1px solid rgba(255,255,255,.26); border-radius: 999px; padding-inline: 1rem !important; }
+        .navbar-tools { flex-shrink: 0; }
+        .cart-link { display: inline-flex; align-items: center; gap: .45rem; color: var(--coffee-ink) !important; background: var(--coffee-gold); border: 1px solid var(--coffee-gold); border-radius: 999px; padding: .45rem .8rem !important; font-size: .9rem; font-weight: 700; line-height: 1; text-decoration: none; transition: background-color .2s ease, border-color .2s ease, transform .2s ease; }
+        .cart-link:hover, .cart-link:focus { color: var(--coffee-ink) !important; background: #e6bb86; border-color: #e6bb86; transform: translateY(-1px); }
+        .cart-link svg { width: 1.1rem; height: 1.1rem; }
+        .cart-count { min-width: 1.25rem; height: 1.25rem; display: inline-grid; place-items: center; padding: 0 .25rem; border-radius: 999px; background: var(--coffee-ink); color: #fff; font-size: .7rem; }
         .hero-panel { min-height: 390px; display: grid; align-items: center; color: white; background: linear-gradient(90deg, rgba(28,20,16,.82), rgba(28,20,16,.2)), url('assets/images/hero.jpg') center/cover; }
         .product-card { overflow: hidden; border: 1px solid rgba(65,44,34,.08); border-radius: 1rem; transition: transform .2s ease, box-shadow .2s ease; }
         .product-card:hover { transform: translateY(-4px); box-shadow: 0 1rem 2rem rgba(43,33,29,.12); }
@@ -31,16 +35,12 @@
 <nav class="navbar navbar-expand-lg navbar-dark site-nav sticky-top">
     <div class="container">
         <a class="navbar-brand fs-4" href="index.php">Bean <span style="color: var(--coffee-gold);">&</span> Brew</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNavigation" aria-controls="siteNavigation" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="siteNavigation">
             <div class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
                 <a class="nav-link" href="index.php">Home</a>
                 <a class="nav-link" href="menu.php">Menu</a>
                 <a class="nav-link" href="about.php">About</a>
                 <a class="nav-link" href="contact.php">Contact</a>
-                <a class="nav-link cart-link" href="cart.php">Cart <span class="badge rounded-pill text-bg-light" data-cart-count><?php echo isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0; ?></span></a>
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <?php if (($_SESSION['user_role'] ?? 'user') === 'admin'): ?>
                         <a class="nav-link" href="admin_dashboard.php">Dashboard</a>
@@ -52,6 +52,20 @@
                     <a class="btn btn-sm btn-warning rounded-pill px-3" href="register.php">Join us</a>
                 <?php endif; ?>
             </div>
+        </div>
+        <div class="navbar-tools d-flex align-items-center gap-2">
+            <a class="cart-link" href="cart.php" aria-label="Shopping cart, <?php echo isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0; ?> items">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 1.9-1.4L22 8H6"></path>
+                    <circle cx="10" cy="20" r="1"></circle>
+                    <circle cx="18" cy="20" r="1"></circle>
+                </svg>
+                <!-- <span>Cart</span> -->
+                <span class="cart-count" data-cart-count><?php echo isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0; ?></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNavigation" aria-controls="siteNavigation" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
     </div>
 </nav>
