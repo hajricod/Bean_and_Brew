@@ -15,7 +15,12 @@ if ($order_id) {
 
 <div class="container" style="text-align: center;">
     <div style="background: white; padding: 50px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-        <div style="font-size: 4rem; color: #4caf50; margin-bottom: 20px;">✅</div>
+        <div role="img" aria-label="Order successful" style="color: #4caf50; margin-bottom: 20px;">
+            <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="48" cy="48" r="44" stroke="currentColor" stroke-width="4"/>
+                <path d="M27 49L41 63L69 34" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
         <h1 style="color: #4e342e;">Thank You for Your Order!</h1>
         
         <?php if ($order): ?>

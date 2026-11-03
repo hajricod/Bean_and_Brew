@@ -22,6 +22,12 @@
         .cart-link:hover, .cart-link:focus { color: var(--coffee-ink) !important; background: #e6bb86; border-color: #e6bb86; transform: translateY(-1px); }
         .cart-link svg { width: 1.1rem; height: 1.1rem; }
         .cart-count { min-width: 1.25rem; height: 1.25rem; display: inline-grid; place-items: center; padding: 0 .25rem; border-radius: 999px; background: var(--coffee-ink); color: #fff; font-size: .7rem; }
+        .site-navigation { --bs-offcanvas-width: min(85vw, 360px); background: var(--coffee-ink); }
+        .site-navigation .offcanvas-title { color: #fff; font-weight: 750; }
+        @media (max-width: 991.98px) {
+            .site-navigation .navbar-nav { padding: .5rem 1rem 1rem; }
+            .site-navigation .nav-link { padding: .8rem 1rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+        }
         .hero-panel { min-height: 390px; display: grid; align-items: center; color: white; background: linear-gradient(90deg, rgba(28,20,16,.82), rgba(28,20,16,.2)), url('assets/images/hero.jpg') center/cover; }
         .product-card { overflow: hidden; border: 1px solid rgba(65,44,34,.08); border-radius: 1rem; transition: transform .2s ease, box-shadow .2s ease; }
         .product-card:hover { transform: translateY(-4px); box-shadow: 0 1rem 2rem rgba(43,33,29,.12); }
@@ -35,7 +41,12 @@
 <nav class="navbar navbar-expand-lg navbar-dark site-nav sticky-top">
     <div class="container">
         <a class="navbar-brand fs-4" href="index.php">Bean <span style="color: var(--coffee-gold);">&</span> Brew</a>
-        <div class="collapse navbar-collapse" id="siteNavigation">
+        <div class="offcanvas offcanvas-lg offcanvas-end site-navigation" tabindex="-1" id="siteNavigation" aria-labelledby="siteNavigationLabel">
+            <div class="offcanvas-header d-lg-none">
+                <h2 class="offcanvas-title fs-5" id="siteNavigationLabel">Navigation</h2>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close navigation"></button>
+            </div>
+            <div class="offcanvas-body p-0">
             <div class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
                 <a class="nav-link" href="index.php">Home</a>
                 <a class="nav-link" href="menu.php">Menu</a>
@@ -52,6 +63,7 @@
                     <a class="btn btn-sm btn-warning rounded-pill px-3" href="register.php">Join us</a>
                 <?php endif; ?>
             </div>
+            </div>
         </div>
         <div class="navbar-tools d-flex align-items-center gap-2">
             <a class="cart-link" href="cart.php" aria-label="Shopping cart, <?php echo isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0; ?> items">
@@ -63,7 +75,7 @@
                 <!-- <span>Cart</span> -->
                 <span class="cart-count" data-cart-count><?php echo isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0; ?></span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#siteNavigation" aria-controls="siteNavigation" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#siteNavigation" aria-controls="siteNavigation" aria-label="Open navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
         </div>
