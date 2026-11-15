@@ -60,6 +60,17 @@ include "../includes/header.php";
                 </div>
             </article>
         </div>
+        <div class="col-lg-6">
+            <article class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 p-4 p-lg-5">
+                    <div>
+                        <h2 class="h4 card-title">User Management</h2>
+                        <p class="card-text text-secondary mb-0">View and manage registered customers and administrators.</p>
+                    </div>
+                    <a href="admin_users.php" class="btn btn-dark rounded-pill px-4 fw-semibold">Manage Users</a>
+                </div>
+            </article>
+        </div>
     </div>
 </section>
 
