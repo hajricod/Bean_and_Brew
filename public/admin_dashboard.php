@@ -37,15 +37,30 @@ include "../includes/header.php";
         </div>
     </div>
 
-    <article class="card border-0 shadow-sm rounded-4">
-        <div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 p-4 p-lg-5">
-            <div>
-                <h2 class="h4 card-title">Menu Management</h2>
-                <p class="card-text text-secondary mb-0">Add new coffees, edit prices and descriptions, or remove items.</p>
-            </div>
-            <a href="admin_menu.php" class="btn btn-warning rounded-pill px-4 fw-semibold">Manage Menu</a>
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <article class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 p-4 p-lg-5">
+                    <div>
+                        <h2 class="h4 card-title">Menu Management</h2>
+                        <p class="card-text text-secondary mb-0">Add new coffees, edit prices and descriptions, or remove items.</p>
+                    </div>
+                    <a href="admin_menu.php" class="btn btn-dark rounded-pill px-4 fw-semibold">Manage Menu</a>
+                </div>
+            </article>
         </div>
-    </article>
+        <div class="col-lg-6">
+            <article class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 p-4 p-lg-5">
+                    <div>
+                        <h2 class="h4 card-title">Order Management</h2>
+                        <p class="card-text text-secondary mb-0">View customer orders and update their status.</p>
+                    </div>
+                    <a href="admin_orders.php" class="btn btn-dark rounded-pill px-4 fw-semibold">Manage Orders</a>
+                </div>
+            </article>
+        </div>
+    </div>
 </section>
 
 <?php include "../includes/footer.php"; ?>
