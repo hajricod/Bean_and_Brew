@@ -76,7 +76,7 @@ $item_count = array_sum(array_column($cart_items, 'quantity'));
                                                 <div class="small text-secondary">$<?php echo number_format($item['price'], 2); ?> each</div>
                                             <?php endif; ?>
                                         </div>
-                                        <form action="cart_handler.php" method="POST">
+                                        <form action="cart_handler.php" method="POST" class="d-inline cart-remove-form">
                                             <input type="hidden" name="action" value="remove">
                                             <input type="hidden" name="item_id" value="<?php echo (int)$item['id']; ?>">
                                             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>">
@@ -128,3 +128,58 @@ $item_count = array_sum(array_column($cart_items, 'quantity'));
 </section>
 
 <?php include "../includes/footer.php"; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const removeForms = document.querySelectorAll('.cart-remove-form');
+
+    removeForms.forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            // console.log('Removing item with ID:', formData.get('item_id'));
+            try {
+                // The hidden input named "action" shadows the form.action property.
+                // Read the form's actual action attribute so the request reaches the handler.
+                const response = await fetch(form.getAttribute('action'), {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const contentType = response.headers.get('content-type') || '';
+                if (!contentType.includes('application/json')) {
+                    throw new Error('The server returned an unexpected page instead of a cart response. Refresh the page and try again.');
+                }
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    // Find the row containing the form and remove it with a fade effect
+                    const row = form.closest('.list-group-item');
+                    row.style.transition = 'opacity 0.3s ease';
+                    row.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        row.remove();
+                        
+                        // If no items left, reload or show empty state
+                        if (document.querySelectorAll('.list-group-item').length === 0) {
+                            location.reload();
+                        }
+                    }, 300);
+                } else {
+                    alert('Error: ' + (result.message || 'The item could not be removed.'));
+                }
+            } catch (error) {
+                console.error('Error removing item:', error);
+                alert(error.message || 'An error occurred while removing the item.');
+            }
+        });
+    });
+});
+</script>

@@ -15,14 +15,16 @@ function cartResponse($success, $message, $status = 200) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     $item_id = $_POST['item_id'] ?? null;
-    $is_ajax = strpos($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json') !== false;
+    $is_ajax = (($_SERVER['HTTP_ACCEPT'] ?? '') !== '' && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false) || 
+               (($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') === 'XMLHttpRequest');
 
     if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'] ?? '')) {
         if ($is_ajax) {
             cartResponse(false, 'Your session expired. Refresh the page and try again.', 403);
+        } else {
+            http_response_code(403);
+            exit('Invalid request token.');
         }
-        http_response_code(403);
-        exit('Invalid request token.');
     }
 
     if ($action === 'add' && $item_id !== null) {
@@ -62,17 +64,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if ($action === 'remove' && $item_id !== null) {
+        $item_id = filter_var($item_id, FILTER_VALIDATE_INT);
+        if (!$item_id) {
+            if ($is_ajax) {
+                cartResponse(false, 'Invalid menu item.', 400);
+            }
+            http_response_code(400);
+            exit('Invalid menu item.');
+        }
+
         if (isset($_SESSION['cart'][$item_id])) {
             unset($_SESSION['cart'][$item_id]);
         }
-        header("Location: cart.php");
-        exit;
+
+        if ($is_ajax) {
+            cartResponse(true, 'Item removed from cart.');
+        } else {
+            header("Location: cart.php");
+            exit;
+        }
     }
 
     if ($action === 'clear') {
         unset($_SESSION['cart']);
-        header("Location: cart.php");
-        exit;
+        if ($is_ajax) {
+            cartResponse(true, 'Cart cleared.');
+        } else {
+            header("Location: cart.php");
+            exit;
+        }
+    }
+
+    if ($is_ajax) {
+        cartResponse(false, 'Unknown cart action. Refresh the page and try again.', 400);
     }
 }
 
