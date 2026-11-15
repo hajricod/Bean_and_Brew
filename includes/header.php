@@ -56,6 +56,7 @@ $current_page = basename($_SERVER['SCRIPT_NAME'] ?? '');
         .account-menu .dropdown-item:focus,
         .account-menu .dropdown-item:active,
         .account-menu .dropdown-item.active { color: var(--coffee-gold); background-color: var(--coffee-ink); }
+        .dropdown-item-separator { border-bottom-color: var(--coffee-brown) !important; opacity: 0.2 !important; }
         @media (max-width: 991.98px) {
             .site-navigation .offcanvas-header { min-height: 76px; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,.12); }
             .site-navigation .offcanvas-body { height: calc(100% - 76px); min-height: 0; overflow-y: auto; }
@@ -131,7 +132,16 @@ $current_page = basename($_SERVER['SCRIPT_NAME'] ?? '');
                                     </svg>
                                     <span>Admin dashboard</span>
                                 </a></li>
+                                <li class="dropdown-item-separator border-bottom my-1 opacity-10"></li>
                             <?php endif; ?>
+                            <li><a class="dropdown-item" href="profile.php">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                                <span>My Profile</span>
+                            </a></li>
+                            <li class="dropdown-item-separator border-bottom my-1 opacity-10"></li>
                             <li><a class="dropdown-item" href="logout.php">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                     <path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>
