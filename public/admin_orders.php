@@ -59,9 +59,9 @@ include "../includes/header.php";
                                 <span class="<?php echo $statusClass; ?>"><?php echo ucfirst($order['status']); ?></span>
                             </td>
                             <td>
-                                <form action="admin_order_status.php" method="POST" class="d-inline">
+                                <form action="admin_order_status.php" method="POST" class="d-inline order-status-form">
                                     <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
-                                    <select name="new_status" class="form-select form-select-sm d-inline-block w-auto" onchange="this.form.submit()">
+                                    <select name="new_status" class="form-select form-select-sm d-inline-block w-auto status-select" onchange="updateOrderStatus(this)">
                                         <option value="" disabled selected>Update</option>
                                         <option value="pending" <?php echo $order['status'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
                                         <option value="preparing" <?php echo $order['status'] === 'preparing' ? 'selected' : ''; ?>>Preparing</option>
@@ -80,3 +80,42 @@ include "../includes/header.php";
 </section>
 
 <?php include "../includes/footer.php"; ?>
+
+<script>
+async function updateOrderStatus(selectElement) {
+    const form = selectElement.closest('.order-status-form');
+    const formData = new FormData(form);
+    const statusBadge = selectElement.closest('td').previousElementSibling.querySelector('.badge');
+    const newStatus = selectElement.value;
+
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            // Update the badge UI
+            let statusClass = 'bg-secondary';
+            switch (newStatus) {
+                case 'pending': statusClass = 'bg-warning text-dark'; break;
+                case 'preparing': statusClass = 'bg-info text-dark'; break;
+                case 'completed': statusClass = 'bg-success'; break;
+                case 'cancelled': statusClass = 'bg-danger'; break;
+            }
+            statusBadge.className = `badge ${statusClass}`;
+            statusBadge.textContent = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+            
+            // Optionally show a small toast or notification
+            console.log('Status updated successfully');
+        } else {
+            alert('Error updating status: ' + (result.error || 'Unknown error'));
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while updating the status.');
+    }
+}
+</script>

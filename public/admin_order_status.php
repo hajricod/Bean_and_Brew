@@ -2,11 +2,14 @@
 require_once "../includes/config.php";
 requireAdmin();
 
+header('Content-Type: application/json');
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check CSRF token
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
         http_response_code(403);
-        exit('Invalid CSRF token.');
+        echo json_encode(['error' => 'Invalid CSRF token.']);
+        exit;
     }
 
     $order_id = $_POST['order_id'] ?? null;
@@ -19,16 +22,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare("UPDATE orders SET status = ? WHERE id = ?");
             $stmt->execute([$new_status, $order_id]);
             
-            header("Location: admin_orders.php?success=1");
+            echo json_encode(['success' => true]);
             exit;
         } catch (PDOException $e) {
-            die("Error updating status: " . $e->getMessage());
+            http_response_code(500);
+            echo json_encode(['error' => 'Error updating status: ' . $e->getMessage()]);
+            exit;
         }
     } else {
-        die("Invalid request.");
+        http_response_code(400);
+        echo json_encode(['error' => 'Invalid request.']);
+        exit;
     }
 } else {
-    header("Location: admin_orders.php");
+    http_response_code(405);
+    echo json_encode(['error' => 'Method not allowed.']);
     exit;
 }
-?>
